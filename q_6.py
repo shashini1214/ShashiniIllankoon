@@ -49,7 +49,7 @@ axis[0].set_title('Foreground Mask')
 axis[1].imshow(cv.cvtColor(img_orig, cv.COLOR_BGR2RGB))
 axis[1].set_title('Original Image')
 
-# Display  image with the equalized foreground.
+# Display  image with equalized foreground.
 axis[2].imshow(cv.cvtColor(img_modified, cv.COLOR_BGR2RGB))
 axis[2].set_title('Image with Equalized Foreground')
 
@@ -60,16 +60,16 @@ for i in axis:
 # ----- Plotting the histograms of the value plane -----
 hist_eq, bins_eq = np.histogram(v_foreground_eq[mask > 0].ravel(), 256, [0, 256])
 
-# Create a new figure with 2 subplots to compare the Value plane histograms
+# Create a new figure with 2 subplots to compare Value plane histograms
 fig, ax = plt.subplots(1, 2, figsize=(12, 4))
 
-# Plot the histogram of the original foreground Value plane.
+# Plot the histogram of original foreground Value plane.
 ax[0].plot(hist)
 ax[0].set_title('Histogram of Value Plane of Foreground')
 ax[0].set_xlabel('Intensity Value')
 ax[0].set_ylabel('Frequency')
 
-# Plot the histogram of the equalized foreground Value plane.
+# Plot the histogram of equalized foreground Value plane.
 ax[1].plot(hist_eq)
 ax[1].set_title('Histogram of Equalized Value Plane of Foreground')
 ax[1].set_xlabel('Intensity Value')
@@ -100,7 +100,7 @@ plt.show()
 
 img_orig = cv.imread('a1images/einstein.png', cv.IMREAD_GRAYSCALE)
 
-# Create the 2D Sobel kernel for the x-direction
+# Create the 2D Sobel kernel for x-direction
 sobel_kernel_x_2d = np.array([[-1, 0, 1],
                               [-2, 0, 2],
                               [-1, 0, 1]], dtype=np.float32)
@@ -110,10 +110,10 @@ sobel_kernel_y_2d = np.array([[-1, -2, -1],
                               [ 0,  0,  0],
                               [ 1,  2,  1]], dtype=np.float32)
 
-# Convolve the loaded grayscale image with x-direction Sobel kernel
+# Convolve loaded grayscale image with x-direction Sobel kernel
 sobel_x_2d = cv.filter2D(img_orig, cv.CV_32F, sobel_kernel_x_2d)
 
-# Convolve the loaded grayscale image with y-direction Sobel kernel
+# Convolve loaded grayscale image with y-direction Sobel kernel
 sobel_y_2d = cv.filter2D(img_orig, cv.CV_32F, sobel_kernel_y_2d)
 
 # gradient magnitude from 2D convolutions
@@ -130,13 +130,13 @@ sobel_kernel_y_1d = np.array([[1], [2], [1]], dtype=np.float32)
 # Convolve grayscale image with 1D kernel for y-direction
 intermediate_y = cv.filter2D(img_orig, cv.CV_32F, sobel_kernel_y_1d)
 
-# Convolve the result with the 1D kernel for the x-direction
+# Convolve the result with 1D kernel for the x-direction
 sobel_x_1d = cv.filter2D(intermediate_y, cv.CV_32F, sobel_kernel_x_1d)
 
-# Convolve grayscale image with the 1D kernel for x-direction
+# Convolve grayscale image with 1D kernel for x-direction
 intermediate_x = cv.filter2D(img_orig, cv.CV_32F, sobel_kernel_x_1d)
 
-# Convolve result with the 1D kernel for y-direction
+# Convolve result with 1D kernel for y-direction
 sobel_y_1d = cv.filter2D(intermediate_x, cv.CV_32F, sobel_kernel_y_1d)
 
 # gradient magnitude from 1D convolutions
